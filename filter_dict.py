@@ -73,9 +73,9 @@ with open('filtered.json') as full_file:
 	data['min_chars'] = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
 	data['max_chars'] = {chr(i): 5 for i in range(ord('a'), ord('z') + 1)}
 
-	update_from_guess(data, [{'o': 0}, {'r': 2}, {'a': 1}, {'t': 0}, {'e': 1}])
-	print("\nafter filtering input:", len(data['dict']), " entries:")
-	print(data['dict'])
+	# update_from_guess(data, [{'o': 0}, {'r': 2}, {'a': 1}, {'t': 0}, {'e': 1}])
+	# print("\nafter filtering input:", len(data['dict']), " entries:")
+	# print(data['dict'])
 
 """
 #	update_correct(data, {'o': 1})
