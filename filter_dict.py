@@ -53,11 +53,21 @@ with open('filtered.json') as full_file:
 
 	data['min_chars'] = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
 	data['max_chars'] = {chr(i): 5 for i in range(ord('a'), ord('z') + 1)}
-	update_correct(data, {'o': 1})
+#	update_correct(data, {'o': 1})
 	update_eliminate(data, 't')
-	update_eliminate(data, 'r')
-	update_eliminate(data, 'a')
-	update_incorrect(data, {'e': 4})
+	update_eliminate(data, 'a')	
+	update_eliminate(data, 'b')
+	update_eliminate(data, 'l')
+	update_eliminate(data, 'e')
+	update_eliminate(data, 'p')
+	update_eliminate(data, 'o')	
+	update_eliminate(data, 'u')
+	update_eliminate(data, 'c')
+	update_eliminate(data, 'h')
+	update_eliminate(data, 'd')
+	update_eliminate(data, 'j')	
+	update_eliminate(data, 'n')
+	update_incorrect(data, {'i': 2})
 	
 #	data['correct'].append({'o': 1})
 #	data['correct'].append({'a': 2})
