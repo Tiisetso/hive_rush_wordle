@@ -55,12 +55,12 @@ def	update_from_guess(data, input_list):
 			update_incorrect(data, {key: index})
 		if value == 0:
 			update_eliminate(data, key)
-		index++
+		index = index + 1
 	temp = dict(filter(lambda x: filter_correct(x, data['correct']), data['dict'].items()))
 	temp2 = dict(filter(lambda x: filter_incorrect_pos(x, data['incorrect'], data['min_chars']), temp.items()))
 	temp3 = dict(filter(lambda x: filter_eliminated(x, data['max_chars']), temp2.items()))
 	data.pop('dict')
-	data.update({"dict":temp3))
+	data.update({"dict": temp3})
 
 
 
@@ -72,6 +72,12 @@ with open('filtered.json') as full_file:
 
 	data['min_chars'] = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
 	data['max_chars'] = {chr(i): 5 for i in range(ord('a'), ord('z') + 1)}
+
+	update_from_guess(data, [{'o': 0}, {'r': 2}, {'a': 1}, {'t': 0}, {'e': 1}])
+	print("\nafter filtering input:", len(data['dict']), " entries:")
+	print(data['dict'])
+
+"""
 #	update_correct(data, {'o': 1})
 	update_eliminate(data, 't')
 	update_eliminate(data, 'a')	
@@ -127,7 +133,7 @@ with open('filtered.json') as full_file:
 
 	print("\nafter filtering for incorrect 'e' at index 4:", len(final_v4), " entries:")
 	print(final_v4)
-
+"""
 
 
 
