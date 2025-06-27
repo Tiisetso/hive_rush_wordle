@@ -1,0 +1,6 @@
+
+Source of word list
+https://github.com/dwyl/english-words/
+direct link:
+https://github.com/dwyl/english-words/blob/master/words_dictionary.json
+
