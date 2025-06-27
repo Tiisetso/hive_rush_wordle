@@ -44,7 +44,26 @@ def update_incorrect(data, pair):
 	(key, value), = pair.items()
 	data['incorrect'].append(pair)
 	data['min_chars'][key] = data['min_chars'][key] + 1
-	
+
+def	update_from_guess(data, input_list):
+	index = 0
+	for entry in input_list:
+		(key, value), = entry.items()
+		if value == 2:
+			update_correct(data, {key: index})
+		if value == 1:
+			update_incorrect(data, {key: index})
+		if value == 0:
+			update_eliminate(data, key)
+		index++
+	temp = dict(filter(lambda x: filter_correct(x, data['correct']), data['dict'].items()))
+	temp2 = dict(filter(lambda x: filter_incorrect_pos(x, data['incorrect'], data['min_chars']), temp.items()))
+	temp3 = dict(filter(lambda x: filter_eliminated(x, data['max_chars']), temp2.items()))
+	data.pop('dict')
+	data.update({"dict":temp3))
+
+
+
 with open('filtered.json') as full_file:
 	dictionary = json.load(full_file)
 	
@@ -91,5 +110,26 @@ with open('filtered.json') as full_file:
 	print(updated)
 	print("\nafter filtering for incorrect 'e' at index 4:", len(final), " entries:")
 	print(final)
+
+	update_eliminate(data, 'f')	
+	update_eliminate(data, 'g')
+	update_correct(data, {'i': 1})
+	update_correct(data, {'y': 4})
+	data['min_chars']['i'] = data['min_chars']['i'] - 1
+	final_v2 = dict(filter(lambda x: filter_correct(x, data['correct']), final.items()))
+	final_v3 = dict(filter(lambda x: filter_eliminated(x, data['max_chars']), final_v2.items()))
+
+	print("\nafter filtering for incorrect 'e' at index 4:", len(final_v3), " entries:")
+	print(final_v3)
+	update_correct(data, {'s': 2})
+	update_correct(data, {'s': 3})
+	final_v4 = dict(filter(lambda x: filter_correct(x, data['correct']), final_v3.items()))
+
+	print("\nafter filtering for incorrect 'e' at index 4:", len(final_v4), " entries:")
+	print(final_v4)
+
+
+
+
 
 
