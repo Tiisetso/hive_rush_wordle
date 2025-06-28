@@ -34,14 +34,10 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
               .classes('text-center box-border p-0 rounded-none')
               .style(
                   '--q-field-border-radius: 0; '
-                  'width: 55px; '
-                  'height: 55px; '
-                  'margin: 0px;'
-                  'font-size: 24px; '
-                  'line-height: 40px; '
-                  f'background-color: {colors[0]};'
-                  'letter-spacing: 0; '
-                  'text-transform: uppercase;'
+                  'width: 55px; height: 55px; margin: 0; '
+                  'font-size: 24px; line-height: 40px; '
+                  f'background-color: {colors[0]}; '
+                  'letter-spacing: 0; text-transform: uppercase;'
               )
               .on('input', enforce_one_letter)
               .on('click', lambda e, idx=i: cycle_color(e, idx))
@@ -49,22 +45,32 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
         cells.append(cell)
 
     ui.button('GO', on_click=lambda _: capture_state()) \
-        .props('unelevated').classes('rounded-none') \
-        .style('width: 55px; height: 55px; font-size: 16px;')
+      .props('unelevated') \
+      .classes('rounded-none') \
+      .style('width: 55px; height: 55px; font-size: 16px;')
+
 
 with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
-    word_card = ui.card().style('width:350px; max-height:200px; overflow-y:auto').props('flat')
+    word_card = (
+        ui.card()
+          .props('flat')
+          .style(
+              'width: 350px; '
+              'max-height: 200px; '
+              'overflow-y: auto;'
+          )
+    )
 
 def capture_state():
     snapshot = [
         {cell.value.lower() or '': states[i]}
-        for i, cell in enumerate(cells)
-    ]
+        for i, cell in enumerate(cells)]
     update_from_guess(data, snapshot)
 
     word_card.clear()
     with word_card:
-        for w in data['dict']:
-            ui.label(w)
+        with ui.element('div').classes('grid grid-cols-3 gap-2 p-2'):
+            for w in data['dict']:
+                ui.label(w)
 
 ui.run()
