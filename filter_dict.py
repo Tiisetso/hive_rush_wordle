@@ -1,4 +1,5 @@
 import json
+import copy
 
 def	filter_correct(pair, correct_list):
 	key, value = pair
@@ -32,51 +33,73 @@ def	filter_eliminated(pair, max_chars):
 			return 0
 	return 1
 
-def update_correct(data, pair):
+def update_correct(dictionary, pair):
 	(key, value), = pair.items()
-	data['correct'].append(pair)
-	data['min_chars'][key] = data['min_chars'][key] + 1
+	if not any(tuple == pair for tuple in dictionary['correct']):
+		dictionary['correct'].append(pair)
+		#only add to character count if not already guessed in wrong position
+		if not any(key in entry for entry in dictionary['incorrect']):
+			dictionary['min_chars'][key] += 1
 
-def update_eliminate(data, char):
-	data['max_chars'][char] = data['min_chars'][char]
+def update_eliminate(dictionary, char):
+	dictionary['max_chars'][char] = dictionary['min_chars'][char]
 
-def update_incorrect(data, pair):
+def update_incorrect(dictionary, pair):
 	(key, value), = pair.items()
-	data['incorrect'].append(pair)
-	data['min_chars'][key] = data['min_chars'][key] + 1
+	if not any(tuple == pair for tuple in dictionary['incorrect']):
+		dictionary['incorrect'].append(pair)
 
-def	update_from_guess(data, input_list):
+def update_minimums(dictionary, input_list):
+	min_copy = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
+	for entry in input_list:
+		(key, value), = entry.items()
+		if value > 0:
+			min_copy[key] += 1
+	for char in dictionary['min_chars'].keys():
+		if dictionary['min_chars'][char] < min_copy[char]:
+			dictionary['min_chars'][char] = min_copy[char]
+
+def	update_from_guess(dictionary, input_list):
 	index = 0
 	for entry in input_list:
 		(key, value), = entry.items()
 		if value == 2:
-			update_correct(data, {key: index})
+			update_correct(dictionary, {key: index})
 		if value == 1:
-			update_incorrect(data, {key: index})
+			update_incorrect(dictionary, {key: index})
 		if value == 0:
-			update_eliminate(data, key)
+			update_eliminate(dictionary, key)
 		index = index + 1
-	temp = dict(filter(lambda x: filter_correct(x, data['correct']), data['dict'].items()))
-	temp2 = dict(filter(lambda x: filter_incorrect_pos(x, data['incorrect'], data['min_chars']), temp.items()))
-	temp3 = dict(filter(lambda x: filter_eliminated(x, data['max_chars']), temp2.items()))
-	data.pop('dict')
-	data.update({"dict": temp3})
+	update_minimums(dictionary, input_list)
+	temp = dict(filter(lambda x: filter_correct(x, dictionary['correct']), dictionary['dict'].items()))
+	temp2 = dict(filter(lambda x: filter_incorrect_pos(x, dictionary['incorrect'], dictionary['min_chars']), temp.items()))
+	temp3 = dict(filter(lambda x: filter_eliminated(x, dictionary['max_chars']), temp2.items()))
+	dictionary.pop('dict')
+	dictionary.update({'dict': temp3})
 
 
 
 with open('filtered.json') as full_file:
-	dictionary = json.load(full_file)
+	input = json.load(full_file)
 	
-	data = {"dict": dictionary, "correct": [], "incorrect": []
+	data = {"dict": input, "correct": [], "incorrect": []
 	, "min_chars": {}, "max_chars": {}}
 
 	data['min_chars'] = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
 	data['max_chars'] = {chr(i): 5 for i in range(ord('a'), ord('z') + 1)}
+'''
+	temp = copy.deepcopy(data)
+	update_from_guess(temp, [{'o': 0}, {'r': 0}, {'a': 0}, {'t': 1}, {'e': 0}])
+	print("\nafter filtering input:", len(temp['dict']), " entries:")
+	print(temp['dict'])
+	update_from_guess(temp, [{'t': 1}, {'u': 1}, {'b': 0}, {'b': 0}, {'y': 0}])
+	print("\nafter filtering input:", len(temp['dict']), " entries:")
+	print(temp['dict'])
+	update_from_guess(temp, [{'s': 2}, {'t': 2}, {'u': 2}, {'c': 0}, {'k': 0}])
+	print("\nafter filtering input:", len(temp['dict']), " entries:")
+	print(temp['dict'])
 
-	# update_from_guess(data, [{'o': 0}, {'r': 2}, {'a': 1}, {'t': 0}, {'e': 1}])
-	# print("\nafter filtering input:", len(data['dict']), " entries:")
-	# print(data['dict'])
-
+'''
 """
 #	update_correct(data, {'o': 1})
 	update_eliminate(data, 't')
