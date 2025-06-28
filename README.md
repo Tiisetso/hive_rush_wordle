@@ -18,10 +18,13 @@ https://stackoverflow.com/questions/46390231/how-can-i-create-a-text-input-box-w
 Unlimited tries on a wordle clone:
 https://engaging-data.com/wordguessr-wordle/
 
+---
+
 Usage instructions for helper.py:
 ```
 python3 helper.py
 ```
+---
 
 Usage instructions for player.py:
 ```
@@ -36,3 +39,11 @@ Will instead choose the most common word (by letter frequency). Finally,
 python3 player.py <word> --rev --rand
 ```
 will instead run against a random word from the baseline dictionary
+
+---
+
+Usage  for make_stats.py
+```
+python3 make_stats.py <N> <log-filename>
+```
+runtime is about 5 minutes per 1000 iterations
