@@ -35,6 +35,7 @@ def	filter_eliminated(pair, max_chars):
 
 def update_correct(dictionary, pair):
 	(key, value), = pair.items()
+	#only add an entry if this wasn't already guessed
 	if not any(tuple == pair for tuple in dictionary['correct']):
 		dictionary['correct'].append(pair)
 		#only add to character count if not already guessed in wrong position
@@ -46,6 +47,7 @@ def update_eliminate(dictionary, char):
 
 def update_incorrect(dictionary, pair):
 	(key, value), = pair.items()
+	#only add entry if the exact one isn't already in the list
 	if not any(tuple == pair for tuple in dictionary['incorrect']):
 		dictionary['incorrect'].append(pair)
 
@@ -67,10 +69,12 @@ def	update_from_guess(dictionary, input_list):
 			update_correct(dictionary, {key: index})
 		if value == 1:
 			update_incorrect(dictionary, {key: index})
-		if value == 0:
-			update_eliminate(dictionary, key)
 		index = index + 1
 	update_minimums(dictionary, input_list)
+	for entry in input_list:
+		(key, value), = entry.items()
+		if value == 0:
+			update_eliminate(dictionary, key)
 	temp = dict(filter(lambda x: filter_correct(x, dictionary['correct']), dictionary['dict'].items()))
 	temp2 = dict(filter(lambda x: filter_incorrect_pos(x, dictionary['incorrect'], dictionary['min_chars']), temp.items()))
 	temp3 = dict(filter(lambda x: filter_eliminated(x, dictionary['max_chars']), temp2.items()))
@@ -80,9 +84,9 @@ def	update_from_guess(dictionary, input_list):
 
 
 with open('filtered.json') as full_file:
-	input = json.load(full_file)
+	inputfile = json.load(full_file)
 	
-	data = {"dict": input, "correct": [], "incorrect": []
+	data = {"dict": inputfile, "correct": [], "incorrect": []
 	, "min_chars": {}, "max_chars": {}}
 
 	data['min_chars'] = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
