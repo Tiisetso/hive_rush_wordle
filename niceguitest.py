@@ -1,6 +1,7 @@
 from nicegui import ui
 from nicegui.events import ValueChangeEventArguments
 from filter_dict import *
+from letter_frequency import *
 
 ui.add_head_html('''
 <style>
@@ -16,9 +17,9 @@ colors = ['white', 'yellow', 'green']
 states = [0] * 5
 cells: list[ui.input] = []
 
-def cycle_color(event, idx: int):
-    states[idx] = (states[idx] + 1) % len(colors)
-    event.sender.style(f'background-color: {colors[states[idx]]}')
+def cycle_color(event, index: int):
+    states[index] = (states[index] + 1) % len(colors)
+    event.sender.style(f'background-color: {colors[states[index]]}')
 
 def enforce_one_letter(event: ValueChangeEventArguments):
     v = (event.value or '').upper()
@@ -48,7 +49,7 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
                   'letter-spacing: 0; text-transform: uppercase;'
               )
               .on('input', enforce_one_letter)
-              .on('click', lambda e, idx=i: cycle_color(e, idx))
+              .on('click', lambda e, index=i: cycle_color(e, index))
         )
         cells.append(cell)
 
@@ -74,7 +75,9 @@ def capture_state():
         for i, cell in enumerate(cells)
     ]
     update_from_guess(data, snapshot)
-
+    # letter_frequency(data)
+    # sort_by_letters(data, args.rev)
+    
     word_card.clear()
     with word_card:
         with ui.element('div').classes('grid grid-cols-3 gap-2 p-2'):
