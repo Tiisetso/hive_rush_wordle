@@ -18,6 +18,8 @@ states = [0] * 5
 cells: list[ui.input] = []
 
 def cycle_color(event, index: int):
+    if not event.sender.value:
+        return
     states[index] = (states[index] + 1) % len(colors)
     event.sender.style(f'background-color: {colors[states[index]]}')
 
