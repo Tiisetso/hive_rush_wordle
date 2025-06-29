@@ -26,6 +26,14 @@ def enforce_one_letter(event: ValueChangeEventArguments):
     if event.value != filtered:
         event.sender.value = filtered
 
+def fill_cells(word: str):
+    word = word.upper()
+    for i, ch in enumerate(word):
+        cells[i].value = ch
+        states[i] = 0 
+        cells[i].style(f'background-color: {colors[0]}')
+        cells[i].update()
+
 with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
     for i in range(5):
         cell = (
@@ -49,7 +57,6 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
       .classes('rounded-none') \
       .style('width: 55px; height: 55px; font-size: 16px;')
 
-
 with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
     word_card = (
         ui.card()
@@ -64,13 +71,16 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
 def capture_state():
     snapshot = [
         {cell.value.lower() or '': states[i]}
-        for i, cell in enumerate(cells)]
+        for i, cell in enumerate(cells)
+    ]
     update_from_guess(data, snapshot)
 
     word_card.clear()
     with word_card:
         with ui.element('div').classes('grid grid-cols-3 gap-2 p-2'):
             for w in data['dict']:
-                ui.label(w)
+                ui.label(w) \
+                  .classes('cursor-pointer') \
+                  .on('click', lambda e, w=w: fill_cells(w))
 
 ui.run()
