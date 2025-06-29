@@ -60,13 +60,13 @@ with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
       .classes('rounded-none') \
       .style('width: 55px; height: 55px; font-size: 16px;')
 
-with ui.row().classes('w-full justify-center').style('margin-top: 5vh'):
+with ui.row().classes('w-full justify-center').style('margin-top: 2vh'):
     word_card = (
         ui.card()
           .props('flat')
           .style(
               'width: 350px; '
-              'max-height: 200px; '
+              'max-height: 350px; '
               'overflow-y: auto;'
           )
     )
@@ -82,7 +82,7 @@ def capture_state():
     
     word_card.clear()
     with word_card:
-        with ui.element('div').classes('grid grid-cols-3 gap-2 p-2'):
+        with ui.element('div').classes('grid grid-cols-5 gap-2 p-2'):
             for w in data['dict']:
                 ui.label(w) \
                   .classes('cursor-pointer') \
