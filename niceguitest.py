@@ -77,8 +77,6 @@ def capture_state():
         for i, cell in enumerate(cells)
     ]
     update_from_guess(data, snapshot)
-    # letter_frequency(data)
-    # sort_by_letters(data, args.rev)
     
     word_card.clear()
     with word_card:
