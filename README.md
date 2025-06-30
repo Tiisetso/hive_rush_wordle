@@ -54,3 +54,15 @@ Wordle Assistant
 pip3 install nicegui
 python3 solver.py
 ```
+---
+Wordle game player
+In order to play this game, you might need to install the pygame extension, that can be done by typing the following command into your terminal:
+```
+pip install pygame
+To run the game, you can put in your terminal the following command:
+```
+python3 hivedle\!.py
+or
+```
+py hivedle\!.py
+
