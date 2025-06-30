@@ -48,7 +48,7 @@ python3 make_stats.py <N> <log-filename>
 ```
 runtime is about 5 minutes per 1000 iterations
 
-
+---
 ## Wordle Assistant
 ```
 pip3 install nicegui
