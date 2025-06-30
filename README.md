@@ -1,15 +1,15 @@
 
-Source of word list
+## Source of word list
 https://github.com/dwyl/english-words/
 
-direct link:
+### Direct link:
 https://raw.githubusercontent.com/dwyl/english-words/refs/heads/master/words_dictionary.json
 
-Possible GUI
+## GUI Investigation
 https://www.geeksforgeeks.org/python/create-first-gui-application-using-python-tkinter/
 
 
-Pygame sources
+## Pygame sources
 https://www.geeksforgeeks.org/python/pygame-tutorial/
 https://www.geeksforgeeks.org/python/getting-started-with-pygame/
 https://www.geeksforgeeks.org/python/how-to-create-a-text-input-box-with-pygame/
@@ -20,13 +20,13 @@ https://engaging-data.com/wordguessr-wordle/
 
 ---
 
-Usage instructions for helper.py:
+## Usage instructions for helper.py:
 ```
 python3 helper.py
 ```
 ---
 
-Usage instructions for player.py:
+## Usage instructions for player.py:
 ```
 python3 player.py <word>
 ```
@@ -42,20 +42,20 @@ will instead run against a random word from the baseline dictionary
 
 ---
 
-Usage  for make_stats.py
+## Usage  for make_stats.py
 ```
 python3 make_stats.py <N> <log-filename>
 ```
 runtime is about 5 minutes per 1000 iterations
 
 
-Wordle Assistant
+## Wordle Assistant
 ```
 pip3 install nicegui
 python3 solver.py
 ```
 ---
-##Wordle game player
+## Wordle game player
 The game does not have an executable file, but it can be run from the terminal. The game also does not have a restart button, but you can terminate the process and run again.
 In order to play this game, you might need to install the pygame extension, that can be done by typing the following command into your terminal:
 ```
