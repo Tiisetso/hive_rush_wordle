@@ -56,14 +56,15 @@ python3 solver.py
 ```
 ---
 Wordle game player
+The game does not have an executable file, but it can be run from the terminal. The game also does not have a restart button, but you can terminate the process and run again.
 In order to play this game, you might need to install the pygame extension, that can be done by typing the following command into your terminal:
 ```
 pip install pygame
-
+```
 To run the game, you can put in your terminal the following command:
 ```
 python3 hivedle\!.py
-
+```
 or
 ```
 py hivedle\!.py
